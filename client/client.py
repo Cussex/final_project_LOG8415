@@ -36,7 +36,7 @@ def main():
     args = parser.parse_args()
     gatekeeper_dns = args.gatekeeper_dns    
 
-    select_actor_query = "SELECT * FROM actor WHERE first_name = 'Scarlett';"
+    select_actor_query = "SELECT * FROM actor WHERE first_name = 'Scarlett' and last_name = 'Johansson';"
     insert_actor_query = "INSERT INTO actor (first_name, last_name) VALUES ('John', 'Doe');"
     delete_actor_query = "DELETE FROM actor WHERE first_name = 'Scarlett' and last_name = 'Johansson';"
 
