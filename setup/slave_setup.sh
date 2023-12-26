@@ -14,8 +14,10 @@ echo 'export MYSQLC_HOME=/opt/mysqlcluster/home/mysqlc' > /etc/profile.d/mysqlc.
 echo 'export PATH=$MYSQLC_HOME/bin:$PATH' >> /etc/profile.d/mysqlc.sh
 source /etc/profile.d/mysqlc.sh
 
+#Install libncurses5
 apt-get update && apt-get -y install libncurses5 > /dev/null 2>&1
 
+#Start data node
 mkdir -p /opt/mysqlcluster/deploy/ndb_data
 ndbd -c MASTER_PRIVATE_DNS:1186 1>/dev/null
 

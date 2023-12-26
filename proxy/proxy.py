@@ -51,6 +51,7 @@ def select(mysql_cnx, query):
     cursor.close()
     return result
 
+# Redirect direct insert queries to the master instance
 @app.route("/direct", methods=["POST"])
 def direct_post():
     request_data = request.get_json()
@@ -60,6 +61,7 @@ def direct_post():
     cnx.close()
     return jsonify(message="Query POST to master successfull"), 201
 
+# Redirect direct select queries to the master instance
 @app.route("/direct", methods=["GET"])
 def direct_get():
     request_data = request.get_json()
@@ -69,6 +71,7 @@ def direct_get():
     cnx.close()
     return jsonify(server="master", dns=master_private_dns, result=result), 200
 
+# Redirect random select queries to a random slave instance
 @app.route("/random", methods=["GET"])
 def random_get():
     request_data = request.get_json()
@@ -79,6 +82,7 @@ def random_get():
     cnx.close()
     return jsonify(server="slave", dns=target_dns, result=result), 200
 
+# Redirect custom select queries to the best instance
 @app.route("/custom", methods=["GET"])
 def custom_get():
     request_data = request.get_json()

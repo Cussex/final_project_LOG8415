@@ -4,7 +4,7 @@ sudo -i
 
 apt-get update > /dev/null 2>&1
 
-#Mysql cluster config
+#Install Mysql cluster
 mkdir -p /opt/mysqlcluster/home
 cd /opt/mysqlcluster/home
 wget -q http://dev.mysql.com/get/Downloads/MySQL-Cluster-7.2/mysql-cluster-gpl-7.2.1-linux2.6-x86_64.tar.gz
@@ -25,6 +25,7 @@ mkdir mysqld_data
 mkdir ndb_data
 cd conf
 
+#MySQL config
 cat > my.cnf << EOF
 [mysqld]
 ndbcluster
@@ -33,6 +34,7 @@ basedir=/opt/mysqlcluster/home/mysqlc
 port=3306
 EOF
 
+#MySQL cluster config
 cat > config.ini << EOF
 [ndb_mgmd]
 hostname=MASTER_PRIVATE_DNS
@@ -63,6 +65,7 @@ EOF
 cd /opt/mysqlcluster/home/mysqlc
 scripts/mysql_install_db --no-defaults --datadir=/opt/mysqlcluster/deploy/mysqld_data 1>/dev/null
 
+#Start the management node
 cd /opt/mysqlcluster/home/mysqlc/bin
 ndb_mgmd -f /opt/mysqlcluster/deploy/conf/config.ini --initial --configdir=/opt/mysqlcluster/deploy/conf 1>/dev/null
 

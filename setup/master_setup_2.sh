@@ -4,6 +4,7 @@ sudo -i
 
 touch /home/ubuntu/sql.log
 
+#Run the mysqld process
 nohup mysqld --defaults-file=/opt/mysqlcluster/deploy/conf/my.cnf --user=root > /home/ubuntu/sql.log 2>&1 &
 
 sleep 20

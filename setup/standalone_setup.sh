@@ -4,10 +4,10 @@ sudo -i
 
 apt-get update > /dev/null 2>&1
 
-#Install mysql
+#Install mysql standalone server
 apt-get install mysql-server -y > /dev/null 2>&1
 
-#install sakila
+#Install sakila
 mkdir /home/sakila
 cd /home/sakila
 wget -q https://downloads.mysql.com/docs/sakila-db.tar.gz 

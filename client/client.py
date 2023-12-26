@@ -2,27 +2,31 @@ import requests
 import argparse
 import json
 
+# Post direct insert queries to the gatekeeper
 def insert_direct(query, gatekeeper_dns):
     try:
         response = requests.post("http://" + gatekeeper_dns + ":8080/direct", json={"query": query})
         return json.loads(response.content)
     except:
         return {"message": "Error in post direct request:" + query}
-    
+
+# Get direct select queries from the gatekeeper
 def select_direct(query, gatekeeper_dns):
     try:
         response = requests.get("http://" + gatekeeper_dns + ":8080/direct", json={"query": query})
         return json.loads(response.content)
     except:
         return {"message": "Error in get direct request:" + query}
-    
+
+# Get random select queries from the gatekeeper
 def select_random(query, gatekeeper_dns):
     try:
         response = requests.get("http://" + gatekeeper_dns + ":8080/random", json={"query": query})
         return json.loads(response.content)
     except:
         return {"message": "Error in get random request:" + query}
-    
+
+# Get custom select queries from the gatekeeper
 def select_custom(query, gatekeeper_dns):
     try:
         response = requests.get("http://" + gatekeeper_dns + ":8080/custom", json={"query": query})
@@ -40,14 +44,19 @@ def main():
     insert_actor_query = "INSERT INTO actor (first_name, last_name) VALUES ('John', 'Doe');"
     delete_actor_query = "DELETE FROM actor WHERE first_name = 'Scarlett' and last_name = 'Johansson';"
 
+    # Should work
     print("\nSelecting from actor table using direct query")
     print(select_direct(select_actor_query, gatekeeper_dns))
+    # Should work
     print("\nInserting into actor table using direct query")
     print(insert_direct(insert_actor_query, gatekeeper_dns))
+    # Should work
     print("\nSelecting from actor table using random query")
     print(select_random(select_actor_query, gatekeeper_dns))
+    # Should work
     print("\nSelecting from actor table using custom query")
     print(select_custom(select_actor_query, gatekeeper_dns))
+    # Shouldn't work
     print("\nDeleting from actor table using direct query")
     print(insert_direct(delete_actor_query, gatekeeper_dns))
 

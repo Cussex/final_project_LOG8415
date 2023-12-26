@@ -12,9 +12,12 @@ args = parser.parse_args()
 
 proxy_private_dns = args.proxy_private_dns
 
+# Only validate select queries of the form "SELECT * FROM actor ..."
 select_validator = re.compile(r"(?i)(^SELECT \* FROM actor .)")
+# Only validate insert queries of the form "INSERT INTO actor (first_name, last_name) VALUES ..."
 insert_validator = re.compile(r"(?i)(^INSERT INTO actor ?\((first_name,\s{0,}last_name)\) VALUES)")
 
+# Function to validate queries based on their type
 def validate_query(type, query):
     if type == "select":
         if select_validator.match(" ".join(query.split())):
@@ -29,6 +32,7 @@ def validate_query(type, query):
     else:
         return False
     
+# Redirect direct insert queries to the proxy after validation
 @app.route("/direct", methods=["POST"])
 def direct_post():
     request_data = request.get_json()
@@ -38,7 +42,8 @@ def direct_post():
         return json.loads(response.content)
     else:
         return jsonify(message="Access denied by gatekeeper"), 403
-    
+
+# Redirect direct select queries to the proxy after validation
 @app.route("/direct", methods=["GET"])
 def direct_get():
     request_data = request.get_json()
@@ -48,7 +53,8 @@ def direct_get():
         return json.loads(response.content)
     else:
         return jsonify(message="Access denied by gatekeeper"), 403
-    
+
+# Redirect random select queries to the proxy after validation
 @app.route("/random", methods=["GET"])
 def random_get():
     request_data = request.get_json()
@@ -58,7 +64,8 @@ def random_get():
         return json.loads(response.content)
     else:
         return jsonify(message="Access denied by gatekeeper"), 403
-    
+
+# Redirect custom select queries to the proxy after validation
 @app.route("/custom", methods=["GET"])
 def custom_get():
     request_data = request.get_json()
