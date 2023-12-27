@@ -1,13 +1,14 @@
 import subprocess
 import boto3
 import os
+import time
 from dotenv import load_dotenv
 from functions import *
 
 load_dotenv("credentials.env")
 aws_access_key_id = os.environ["aws_access_key_id"]
 aws_secret_access_key = os.environ["aws_secret_access_key"]
-aws_session_token = os.environ["aws_session_token"]
+#aws_session_token = os.environ["aws_session_token"]
 
 # Define EC2 instance parameters
 keyPairName = 'LOG8415E'
@@ -19,7 +20,7 @@ EC2 = boto3.client(
     region_name="us-east-1",
     aws_access_key_id=aws_access_key_id,
     aws_secret_access_key=aws_secret_access_key,
-    aws_session_token=aws_session_token
+    #aws_session_token=aws_session_token
 )
 
 WAITER = EC2.get_waiter('instance_status_ok')
@@ -102,6 +103,9 @@ subprocess.call(["sed", "-i", "", "s/" + slave3_private_dns + "/SLAVE3_PRIVATE_D
 subprocess.call(["sed", "-i", "", "s/" + master_private_dns + "/MASTER_PRIVATE_DNS/g", "setup/slave_setup.sh"])
 
 os.system("ssh -o StrictHostKeyChecking=no -i " + keyPairName + ".pem ubuntu@" + master_dns + " 'bash -s' < setup/master_setup_2.sh")
+os.system("ssh -o StrictHostKeyChecking=no -i " + keyPairName + ".pem ubuntu@" + slave1_dns + " 'bash -s' < setup/slave_setup_2.sh")
+os.system("ssh -o StrictHostKeyChecking=no -i " + keyPairName + ".pem ubuntu@" + slave2_dns + " 'bash -s' < setup/slave_setup_2.sh")
+os.system("ssh -o StrictHostKeyChecking=no -i " + keyPairName + ".pem ubuntu@" + slave3_dns + " 'bash -s' < setup/slave_setup_2.sh")
 
 print("All instances are configured")
 
@@ -129,6 +133,8 @@ os.system("scp -o StrictHostKeyChecking=no -i " + keyPairName + ".pem -r gatekee
 os.system("ssh -o StrictHostKeyChecking=no -i " + keyPairName + ".pem ubuntu@" + gatekeeper_dns + " 'bash -s' < gatekeeper/deploy_gatekeeper.sh")
 subprocess.call(["sed", "-i", "", "s/" + proxy_private_dns + "/PROXY_PRIVATE_DNS/g", "gatekeeper/deploy_gatekeeper.sh"])
 print("Gatekeeper deployed")
+
+time.sleep(20)
 
 print("Testing proxy and gatekeeper...")
 

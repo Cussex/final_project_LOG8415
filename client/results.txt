@@ -1,0 +1,17 @@
+
+Selecting from actor table using direct query
+{'message': "Error in get direct request:SELECT * FROM actor WHERE first_name = 'Scarlett' and last_name = 'Johansson';"}
+
+Inserting into actor table using direct query
+{'message': "Error in post direct request:INSERT INTO actor (first_name, last_name) VALUES ('John', 'Doe');"}
+
+Selecting from actor table using random query
+{'dns': 'ip-172-31-75-132.ec2.internal', 'result': [], 'server': 'slave'}
+
+Selecting from actor table using custom query
+{'dns': 'ip-172-31-75-132.ec2.internal', 'result': [], 'server': 'slave'}
+
+Deleting from actor table using direct query
+{'message': 'Access denied by gatekeeper'}
+
+ Tests completed

@@ -131,6 +131,12 @@ def create_security_group(ec2_client, security_group_name, vpc_id):
                 },
                 {
                     'IpProtocol': 'tcp',
+                    'FromPort': 8080,  # Flask port
+                    'ToPort': 8080,    # Flask port
+                    'IpRanges': [{'CidrIp': '0.0.0.0/0'}]  
+                },
+                {
+                    'IpProtocol': 'tcp',
                     'FromPort': 1186,  # MySQL management node port
                     'ToPort': 1186,    # MySQL management node port
                     'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
@@ -145,6 +151,12 @@ def create_security_group(ec2_client, security_group_name, vpc_id):
                     'IpProtocol': 'tcp',
                     'FromPort': 2202,  # MySQL data node port
                     'ToPort': 2202,    # MySQL data node port
+                    'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
+                },
+                {
+                    'IpProtocol': 'icmp',
+                    'FromPort': -1,  # ICMP port
+                    'ToPort': -1,    # ICMP port
                     'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
                 },
             ]

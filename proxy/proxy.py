@@ -8,7 +8,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("master_private_dns", help="Master's priavte dns")
+parser.add_argument("master_private_dns", help="Master's private dns")
 parser.add_argument("--slaves_dns", nargs="+", help="List of private slaves dns")
 args = parser.parse_args()
 

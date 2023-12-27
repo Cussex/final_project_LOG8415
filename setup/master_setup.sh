@@ -60,6 +60,19 @@ nodeid=5
 
 [mysqld]
 nodeid=6
+hostname=MASTER_PRIVATE_DNS
+
+[mysqld]
+nodeid=7
+hostname=SLAVE1_PRIVATE_DNS
+
+[mysqld]
+nodeid=8
+hostname=SLAVE2_PRIVATE_DNS
+
+[mysqld]
+nodeid=9
+hostname=SLAVE3_PRIVATE_DNS
 EOF
 
 cd /opt/mysqlcluster/home/mysqlc
