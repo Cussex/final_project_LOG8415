@@ -1,15 +1,21 @@
 
-Selecting from actor table using direct query
-{'message': "Error in get direct request:SELECT * FROM actor WHERE first_name = 'Scarlett' and last_name = 'Johansson';"}
+Selecting from actor table using direct query (Should work : selecting JENNIFER DAVIS)
+{'dns': 'ip-172-31-67-82.ec2.internal', 'result': [[4, 'JENNIFER', 'DAVIS', 'Wed, 15 Feb 2006 04:34:33 GMT']], 'server': 'master'}
 
-Inserting into actor table using direct query
-{'message': "Error in post direct request:INSERT INTO actor (first_name, last_name) VALUES ('John', 'Doe');"}
+Selecting from actor table using direct query (Should work but empty response : selecting JOHN DOE)
+{'dns': 'ip-172-31-67-82.ec2.internal', 'result': [], 'server': 'master'}
 
-Selecting from actor table using random query
-{'dns': 'ip-172-31-75-132.ec2.internal', 'result': [], 'server': 'slave'}
+Inserting into actor table using direct query (Should work : inserting JOHN DOE)
+{'message': 'Query POST to master successfull'}
 
-Selecting from actor table using custom query
-{'dns': 'ip-172-31-75-132.ec2.internal', 'result': [], 'server': 'slave'}
+Selecting from actor table using random query (Should work : selecting JENNIFER DAVIS)
+{'dns': 'ip-172-31-77-159.ec2.internal', 'result': [[4, 'JENNIFER', 'DAVIS', 'Wed, 15 Feb 2006 04:34:33 GMT']], 'server': 'slave'}
+
+Selecting from actor table using custom query (Should work : selecting JENNIFER DAVIS)
+{'dns': 'ip-172-31-67-82.ec2.internal', 'result': [[4, 'JENNIFER', 'DAVIS', 'Wed, 15 Feb 2006 04:34:33 GMT']], 'server': 'master'}
+
+Selecting from actor table using custom query (Should work : selecting JOHN DOE)
+{'dns': 'ip-172-31-67-82.ec2.internal', 'result': [[201, 'JOHN', 'DOE', 'Wed, 27 Dec 2023 23:55:31 GMT']], 'server': 'master'}
 
 Deleting from actor table using direct query
 {'message': 'Access denied by gatekeeper'}
